@@ -1,0 +1,112 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: dev
+  main:
+    allow-circular-references: true
+  datasource:
+    druid: #資料庫連結池
+      driver-class-name: ${sky.datasource.driver-class-name}
+      url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}}/${sky.datasource.database}
+      username: root
+      password: 1234
+#  datasource:
+#    druid:
+#      driver-class-name: ${sky.datasource.driver-class-name}
+#      url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+#      username: ${sky.datasource.username}
+#      password: ${sky.datasource.password}
+#      validation-query: SELECT 1   # 用来检测连接是否有效的sql
+#      test-while-idle: true  # 如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效
+#      initial-size: 1  # 初始化时建立物理连接的个数
+#      min-idle: 1  # 即使超过空闲时间也不会被回收
+#      max-active: 8 # 最大连接数
+#      min-evictable-idle-time-millis: 300000 # 当空闲时间达到5分钟回收连接
+#      time-between-eviction-runs-millis: 60000 # 每过1分钟执行1次空闲检测
+
+#  redis:
+#    host: ${sky.data.redis.host}
+#    port: ${sky.data.redis.port}
+#    database: ${sky.data.redis.database}
+#    password: ${sky.data.redis.password}
+#    lettuce:
+#      pool:
+#        min-idle: 1
+#        max-active: 10
+#        max-idle: 5
+#        max-wait: -1ms
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+    password:
+    lettuce:
+      pool:
+        min-idle: 1
+        max-active: 10
+        max-idle: 5
+        max-wait: -1ms
+
+mybatis:
+  #mapper配置文件
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.sky.entity
+  configuration:
+    #开启驼峰命名
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com:
+      sky:
+        mapper: debug
+        service: info
+        controller: info
+
+sky:
+  r2:
+    public-url: ${sky.r2.public-url}
+    bucket-name: ${sky.r2.bucket-name}
+    aws-access-key-id: ${sky.r2.aws-access-key-id}
+    aws-secret-access-key: ${sky.r2.aws-secret-access-key}
+    endpoint: ${sky.r2.endpoint}
+  jwt:
+    # 设置jwt签名加密时使用的秘钥
+    admin-secret-key: itcast
+    # 设置jwt过期时间
+    admin-ttl: 7200000
+    # 设置前端传递过来的令牌名称
+    admin-token-name: token
+  alioss:
+    endpoint: xxx
+    access-key-id: xxx
+    access-key-secret: xxx
+    bucket-name: xxx
+    user-secret-key: aslkdsajdlkjhdsfb
+    user-ttl: 86400000
+    user-token-name: authentication
+
+  wechat:
+    api-v3-key: test_key
+#    appid: ${sky.wechat.appid}
+#    secret: ${sky.wechat.secret}
+#    mchid: ${sky.wechat.mchid}
+#    mch-serial-no: ${sky.wechat.mch-serial-no}
+#    private-key-file-path: ${sky.wechat.private-key-file-path}
+#    api-v3-key: ${sky.wechat.api-v3-key}
+#    we-chat-pay-cert-file-path: ${sky.wechat.private-key-file-path}
+#    notify-url: ${sky.wechat.notify-url}
+#    refund-notify-url: ${sky.wechat.refund-notify-url}
+  baidu:
+    baidu:
+      ak: "0"
+      location-url: "https://api.map.baidu.com/location/v2"
+      distance-url: "https://api.map.baidu.com/distance/v2"
+  shop:
+    location:
+      lng: 0
+      lat: 0
+    limit-distance:
+

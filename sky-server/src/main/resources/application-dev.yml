@@ -1,0 +1,14 @@
+sky:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    host: localhost
+    port: 3306
+    database: sky_take_out
+    username: root
+    password: 1234
+  r2:
+    endpoint: https://49438264f0ddc094b589f1e0b737e445.r2.cloudflarestorage.com
+    public-url: pub-7db6ef2124f14e9d814f5a5f35ebb710
+    bucket-name: java-web
+    aws-secret-access-key: 2a27443e107d66bb54db23c9a27703db2257280a86fc65f262e7ba1e00b7945b
+    aws-access-key-id: bc87917cef8d88bf5415b6bfdbb48cde
