@@ -63,7 +63,7 @@ public class DishServiceImpl implements DishService {
         // 屬性拷貝賦值
         BeanUtils.copyProperties(dishDTO, dish);
 
-        // 向菜品表插入1條數據
+        // 向 菜品表 插入1條數據
         dishMapper.insert(dish);
 
         // 獲取insert生成的主鍵值
@@ -77,7 +77,7 @@ public class DishServiceImpl implements DishService {
             // 批量插入dish_Id的值
             flavors.forEach(dishFlavor -> dishFlavor.setDishId(dishId));
 
-            // 向菜品表插入N條數據
+            // 向 口味表 插入N條數據
             dishFlavorMapper.insertBatch(flavors);
         }
     }
