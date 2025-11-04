@@ -9,7 +9,7 @@ spring:
   datasource:
     druid: #資料庫連結池
       driver-class-name: ${sky.datasource.driver-class-name}
-      url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}}/${sky.datasource.database}
+      url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}
       username: root
       password: 1234
 #  datasource:

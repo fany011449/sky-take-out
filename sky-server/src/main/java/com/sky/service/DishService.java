@@ -9,19 +9,29 @@ import com.sky.vo.DishVO;
 import java.util.List;
 
 public interface DishService {
-    PageResult<DishVO> getDishList(DishPageQueryDTO dishPageQueryDTO);
 
-    boolean saveDish(DishDTO dishDTO);
+    /**
+     * 新增菜品
+     * @param dishDTO
+     */
+    void saveWithFlavor(DishDTO dishDTO);
 
-    boolean deleteDishByIds(List<Long> ids);
 
-    DishVO getDishVOById(Long id);
 
-    boolean updateDish(DishDTO dishDTO);
-
-    boolean updateDishStatus(Long id, Integer status);
-
-    List<Dish> getDishListByCategoryId(Long categoryId);
-
-    List<DishVO> getDishVoListByCategoryId(Long categoryId);
+//
+//    PageResult<DishVO> getDishList(DishPageQueryDTO dishPageQueryDTO);
+//
+//    boolean saveDish(DishDTO dishDTO);
+//
+//    boolean deleteDishByIds(List<Long> ids);
+//
+//    DishVO getDishVOById(Long id);
+//
+//    boolean updateDish(DishDTO dishDTO);
+//
+//    boolean updateDishStatus(Long id, Integer status);
+//
+//    List<Dish> getDishListByCategoryId(Long categoryId);
+//
+//    List<DishVO> getDishVoListByCategoryId(Long categoryId);
 }

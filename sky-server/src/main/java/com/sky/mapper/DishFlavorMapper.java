@@ -11,4 +11,10 @@ public interface DishFlavorMapper {
     int saveBatch(List<DishFlavor> dishFlavors);
 
     int deleteByDishIds(List<Long> ids);
+
+    /**
+     * 批量插入口味數據
+     * @param flavors
+     */
+    void insertBatch(List<DishFlavor> flavors);
 }

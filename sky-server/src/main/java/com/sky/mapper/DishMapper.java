@@ -3,6 +3,7 @@ package com.sky.mapper;
 import com.github.pagehelper.Page;
 import com.sky.annotation.AutoFill;
 import com.sky.annotation.AutoSet;
+import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.enumeration.OperationType;
@@ -17,6 +18,22 @@ import java.util.List;
 
 @Mapper
 public interface DishMapper {
+
+    /**
+     * 根據分類Id查詢菜品數量
+     * @param categoryId
+     * @return
+     */
+    @Select("select count(id) from sky_take_out.dish where category_id = #{categoryId}")
+    Integer countByCategoryId(Long categoryId);
+
+    /**
+     * 新增菜品
+     * @param dish
+     */
+    @AutoFill(OperationType.INSERT)
+    void insert(Dish dish);
+
 
     // 根据分类ID查找菜品
     @Select("select count(1) from dish where category_id = #{id}")
@@ -53,4 +70,6 @@ public interface DishMapper {
     List<DishVO> getDishVoListByCategoryId(Long categoryId);
 
     DishOverViewVO getAllStatusDishesCount();
+
+
 }

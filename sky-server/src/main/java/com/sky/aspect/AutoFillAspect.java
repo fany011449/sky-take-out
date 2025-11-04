@@ -1,10 +1,9 @@
 package com.sky.aspect;
 
 import com.sky.annotation.AutoFill;
-import com.sky.constant.AutoSetConstant;
+import com.sky.constant.AutoFillConstant;
 import com.sky.context.BaseContext;
 import com.sky.enumeration.OperationType;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -64,10 +63,10 @@ public class AutoFillAspect {
             // 賦值 4 個公共字段
             try {
                 // 此區域是使用了反射API
-                Method setCreateTime = entity.getClass().getDeclaredMethod(AutoSetConstant.SET_CREATE_TIME, LocalDateTime.class);
-                Method setCreateUser = entity.getClass().getDeclaredMethod(AutoSetConstant.SET_CREATE_USER, Long.class);
-                Method setUpdateTime = entity.getClass().getDeclaredMethod(AutoSetConstant.SET_UPDATE_TIME, LocalDateTime.class);
-                Method setUpdateUser = entity.getClass().getDeclaredMethod(AutoSetConstant.SET_UPDATE_USER, Long.class);
+                Method setCreateTime = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_CREATE_TIME, LocalDateTime.class);
+                Method setCreateUser = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_CREATE_USER, Long.class);
+                Method setUpdateTime = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_TIME, LocalDateTime.class);
+                Method setUpdateUser = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_USER, Long.class);
 
                 // 通過反射為對象屬性賦值
                 setCreateTime.invoke(entity, now);
@@ -80,8 +79,8 @@ public class AutoFillAspect {
         } else if(operationType == OperationType.UPDATE) {
             // 賦值 2 個公共字段
             try {
-                Method setUpdateTime = entity.getClass().getDeclaredMethod(AutoSetConstant.SET_UPDATE_TIME, LocalDateTime.class);
-                Method setUpdateUser = entity.getClass().getDeclaredMethod(AutoSetConstant.SET_UPDATE_USER, Long.class);
+                Method setUpdateTime = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_TIME, LocalDateTime.class);
+                Method setUpdateUser = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_USER, Long.class);
 
                 // 通過反射為對象屬性賦值
                 setUpdateTime.invoke(entity, now);
