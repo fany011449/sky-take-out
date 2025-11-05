@@ -45,6 +45,18 @@ public class DishController {
         return Result.success();
     }
 
+    /**
+     * 菜品分頁查詢
+     * @param dishPageQueryDTO
+     * @return
+     */
+    @ApiOperation("菜品分頁查詢")
+    @GetMapping("/page")
+    public Result<PageResult> page(DishPageQueryDTO dishPageQueryDTO){
+        log.info("菜品分頁查詢:{}", dishPageQueryDTO);
+        PageResult pageResult = dishService.pageQuery(dishPageQueryDTO);
+        return Result.success(pageResult);
+    }
 
 
 //    @Autowired

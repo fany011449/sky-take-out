@@ -35,6 +35,13 @@ public interface DishMapper {
     void insert(Dish dish);
 
 
+    /**
+     * 菜品分頁查詢
+     * @param dishPageQueryDTO
+     * @return
+     */
+    Page<DishVO> pageQuery(DishPageQueryDTO dishPageQueryDTO);
+
     // 根据分类ID查找菜品
     @Select("select count(1) from dish where category_id = #{id}")
     int getCountByCategoryId(Long id);
@@ -70,6 +77,5 @@ public interface DishMapper {
     List<DishVO> getDishVoListByCategoryId(Long categoryId);
 
     DishOverViewVO getAllStatusDishesCount();
-
 
 }
