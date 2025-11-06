@@ -23,6 +23,13 @@ public interface DishService {
      */
     PageResult pageQuery(DishPageQueryDTO dishPageQueryDTO);
 
+    /**
+     * 菜品批量刪除
+     * @param ids
+     * @return
+     */
+    void deleteBatch(List<Long> ids);
+
 
 //
 //    PageResult<DishVO> getDishList(DishPageQueryDTO dishPageQueryDTO);

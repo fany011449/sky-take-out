@@ -9,6 +9,17 @@ import java.util.List;
 
 @Mapper
 public interface SetMealDishMapper {
+
+    /**
+     * 根據 菜品ID 查詢 套餐ID
+     *
+     * @param ids
+     * @return
+     */
+    // select setmeal_id from setmeal_dish where dish_id in (1,2,3)
+    // ids數組，此Mysql為動態語句
+    List<Long> getSetMealIdsByDishIds(List<Long> ids);
+
     List<Long> getCountByDishIds(List<Long> ids);
 
     void saveSetmealDishBatch(List<SetmealDish> setmealDishes);

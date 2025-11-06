@@ -9,38 +9,12 @@ import com.sky.entity.Dish;
 import com.sky.enumeration.OperationType;
 import com.sky.vo.DishOverViewVO;
 import com.sky.vo.DishVO;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 @Mapper
 public interface DishMapper {
-
-    /**
-     * 根據分類Id查詢菜品數量
-     * @param categoryId
-     * @return
-     */
-    @Select("select count(id) from sky_take_out.dish where category_id = #{categoryId}")
-    Integer countByCategoryId(Long categoryId);
-
-    /**
-     * 新增菜品
-     * @param dish
-     */
-    @AutoFill(OperationType.INSERT)
-    void insert(Dish dish);
-
-
-    /**
-     * 菜品分頁查詢
-     * @param dishPageQueryDTO
-     * @return
-     */
-    Page<DishVO> pageQuery(DishPageQueryDTO dishPageQueryDTO);
 
     // 根据分类ID查找菜品
     @Select("select count(1) from dish where category_id = #{id}")
@@ -78,4 +52,66 @@ public interface DishMapper {
 
     DishOverViewVO getAllStatusDishesCount();
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * 根據分類Id查詢菜品數量
+     * @param categoryId
+     * @return
+     */
+    @Select("select count(id) from sky_take_out.dish where category_id = #{categoryId}")
+    Integer countByCategoryId(Long categoryId);
+
+    /**
+     * 新增菜品
+     * @param dish
+     */
+    @AutoFill(OperationType.INSERT)
+    void insert(Dish dish);
+
+
+    /**
+     * 菜品分頁查詢
+     * @param dishPageQueryDTO
+     * @return
+     */
+    Page<DishVO> pageQuery(DishPageQueryDTO dishPageQueryDTO);
+
+    /**
+     * 根據主鍵ID查詢菜品
+     *
+     * @param id
+     * @return
+     */
+    @Select("Select * from dish where id = #{id}")
+    Dish getById(Long id);
+
+    /**
+     * 根據主鍵刪除菜品
+     * @param id
+     */
+    @Delete("delete from dish where id = #{id}")
+    void deleteById(Long id);
 }

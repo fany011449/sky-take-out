@@ -4,7 +4,7 @@
 <mapper namespace="com.sky.mapper.SetMealDishMapper">
     <select id="getCountByDishIds" resultType="java.lang.Long">
         select
-            dish_id
+        dish_id
         from setmeal_dish
         where dish_id in
         <foreach collection="ids" item="id" open="(" close=")" separator=",">
@@ -16,9 +16,10 @@
     <insert id="saveSetmealDishBatch">
         insert into setmeal_dish (setmeal_id, dish_id, name, price, copies)
         values
-            <foreach collection="setmealDishes" item="setMealDish" separator=",">
-                (#{setMealDish.setmealId}, #{setMealDish.dishId}, #{setMealDish.name}, #{setMealDish.price}, #{setMealDish.copies})
-            </foreach>
+        <foreach collection="setmealDishes" item="setMealDish" separator=",">
+            (#{setMealDish.setmealId}, #{setMealDish.dishId}, #{setMealDish.name}, #{setMealDish.price},
+            #{setMealDish.copies})
+        </foreach>
     </insert>
 
 
@@ -33,13 +34,22 @@
 
 
     <select id="getDishListBySetMealId" resultType="com.sky.vo.DishItemVO">
-        select
-               sd.copies,
+        select sd.copies,
                d.name,
                d.image,
                d.description
         from setmeal_dish sd
                  join dish d on sd.dish_id = d.id
-        where sd.setmeal_id = #{id} and d.status = 1
+        where sd.setmeal_id = #{id}
+          and d.status = 1
+    </select>
+
+
+    <!--    根據 菜品ID 查詢 套餐ID-->
+    <select id="getSetMealIdsByDishIds" resultType="java.lang.Long">
+        select setmeal_id from setmeal_dish where dish_id in
+        <foreach collection="ids" item="dishId" separator="," open="(" close=")">
+            #{dishId}
+        </foreach>
     </select>
 </mapper>

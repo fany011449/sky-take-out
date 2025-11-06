@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.sky.constant.MessageConstant;
 import com.sky.constant.RedisConstant;
+import com.sky.constant.StatusConstant;
 import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Category;
@@ -36,6 +38,9 @@ public class DishServiceImpl implements DishService {
     @Autowired
     private DishFlavorMapper dishFlavorMapper;
 
+    @Autowired
+    private SetMealDishMapper setMealDishMapper;
+
 //
 //    @Autowired
 //    private CategoryMapper categoryMapper;
@@ -43,7 +48,6 @@ public class DishServiceImpl implements DishService {
 
 //
 //    @Autowired
-//    private SetMealDishMapper setMealDishMapper;
 //
 //    @Autowired
 //    private AliOssUtil aliOssUtil;
@@ -53,6 +57,7 @@ public class DishServiceImpl implements DishService {
 
     /**
      * 新增菜品和對應的口味
+     *
      * @param dishDTO
      */
     @Transactional
@@ -73,7 +78,7 @@ public class DishServiceImpl implements DishService {
         List<DishFlavor> flavors = dishDTO.getFlavors();
 
         // flavors != null &&　flavors.size() > 0
-        if(!CollectionUtils.isEmpty(flavors)) {
+        if (!CollectionUtils.isEmpty(flavors)) {
             // 批量插入dish_Id的值
             flavors.forEach(dishFlavor -> dishFlavor.setDishId(dishId));
 
@@ -84,6 +89,7 @@ public class DishServiceImpl implements DishService {
 
     /**
      * 菜品分頁查詢
+     *
      * @param dishPageQueryDTO
      * @return
      */
@@ -93,7 +99,43 @@ public class DishServiceImpl implements DishService {
         Page<DishVO> page = dishMapper.pageQuery(dishPageQueryDTO);
         return new PageResult(page.getTotal(), page.getResult());
     }
-//
+
+    /**
+     * 菜品批量刪除
+     *
+     * @param ids
+     * @return
+     */
+    @Transactional
+    @Override
+    public void deleteBatch(List<Long> ids) {
+        // 判斷當前菜品是否能刪除 -- 使否出售中
+        for (Long id : ids) {
+            Dish dish = dishMapper.getById(id);
+            if (dish.getStatus() == StatusConstant.ENABLE) {
+                // 目前 菜品 狀態為出售中，無法刪除
+                throw new DeletionNotAllowedException(MessageConstant.DISH_ON_SALE);
+            }
+        }
+
+        // 斷當前菜品是否能刪除 --  菜品是否被套餐關聯
+        List<Long> setMealIds = setMealDishMapper.getSetMealIdsByDishIds(ids);
+
+        if (!CollectionUtils.isEmpty(setMealIds)) {
+            // 當前目前 菜品 與 套餐 關聯，無法刪除
+            throw new DeletionNotAllowedException(MessageConstant.DISH_BE_RELATED_BY_SETMEAL);
+        }
+
+        // 刪除菜品表中的菜品數據
+        for (Long id : ids) {
+            dishMapper.deleteById(id);
+            // 刪除菜品關聯的口味數據
+            dishFlavorMapper.deletByDishId(id);
+        }
+
+    }
+
+    //
 //    @Override
 //    public PageResult<DishVO> getDishList(DishPageQueryDTO dishPageQueryDTO) {
 ////        Page<DishVO> dishVoPage = PageHelper.startPage(dishPageQueryDTO.getPage(), dishPageQueryDTO.getPageSize())
