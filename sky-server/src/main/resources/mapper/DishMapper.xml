@@ -24,6 +24,42 @@
         order by d.create_time desc
     </select>
 
+    <update id="update">
+        update dish
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="categoryId != null">category_id = #{categoryId},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="image != null">image = #{image},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="updateTime != null">updat_time = #{updateTime},</if>
+            <if test="updateUser != null">update_user = #{updateUser}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <resultMap id="DishVOMap" type="com.sky.vo.DishVO" autoMapping="true">
         <id column="id" property="id"/>
@@ -120,6 +156,7 @@
         </set>
         where id = #{id}
     </update>
+
 
     <select id="getDishImagesByIds" resultType="java.lang.String">
         select image

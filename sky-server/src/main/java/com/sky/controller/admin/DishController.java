@@ -72,6 +72,32 @@ public class DishController {
 
         return Result.success();
     }
+
+    /**
+     * 根據ID查詢菜品
+     * @return
+     */
+    @GetMapping("/{id}")
+    @ApiOperation("根據ID查詢菜品")
+    public Result<DishVO> getById(@PathVariable Long id){
+        log.info("根據id查詢菜品: {}", id);
+        DishVO dishVO = dishService.getByIdWithFlavor(id);
+
+        return Result.success(dishVO);
+    }
+
+    /**
+     * 修改菜品
+     * @param dishDTO
+     * @return
+     */
+    @PutMapping
+    @ApiOperation("修改菜品")
+    public Result update(@RequestBody DishDTO dishDTO){
+        log.info("修改菜品:{}", dishDTO);
+        dishService.updateWithFlavor(dishDTO);
+        return Result.success();
+    }
 //    @Autowired
 //    private DishService dishService;
 //
