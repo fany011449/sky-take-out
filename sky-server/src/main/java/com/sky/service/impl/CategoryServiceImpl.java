@@ -1,8 +1,6 @@
 package com.sky.service.impl;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import com.sky.constant.StatusConstant;
+import com.sky.constant.ShopStatusConstant;
 import com.sky.dto.CategoryDTO;
 import com.sky.dto.CategoryPageQueryDTO;
 import com.sky.entity.Category;
@@ -81,7 +79,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         Category category = new Category();
         BeanUtils.copyProperties(categoryDTO, category);
-        category.setStatus(StatusConstant.DISABLE);
+        category.setStatus(ShopStatusConstant.DISABLE);
 //        category.setCreateTime(LocalDateTime.now());
 //        category.setUpdateTime(LocalDateTime.now());
 //        category.setCreateUser(BaseContext.getCurrentId());

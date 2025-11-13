@@ -12,3 +12,8 @@ sky:
     bucket-name: java-web
     aws-secret-access-key: 2a27443e107d66bb54db23c9a27703db2257280a86fc65f262e7ba1e00b7945b
     aws-access-key-id: bc87917cef8d88bf5415b6bfdbb48cde
+  redis:
+    host: localhost
+    port: 6379
+    password: 123456
+    database: 0

@@ -1,32 +1,24 @@
 package com.sky.service.impl;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
-import com.sky.constant.RedisConstant;
-import com.sky.constant.StatusConstant;
+import com.sky.constant.ShopStatusConstant;
 import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
-import com.sky.entity.Category;
 import com.sky.entity.Dish;
 import com.sky.entity.DishFlavor;
-import com.sky.exception.BusinessException;
 import com.sky.exception.DeletionNotAllowedException;
 import com.sky.mapper.*;
 import com.sky.result.PageResult;
 import com.sky.service.DishService;
-import com.sky.utils.AliOssUtil;
 import com.sky.vo.DishVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -112,7 +104,7 @@ public class DishServiceImpl implements DishService {
         // 判斷當前菜品是否能刪除 -- 使否出售中
         for (Long id : ids) {
             Dish dish = dishMapper.getById(id);
-            if (dish.getStatus() == StatusConstant.ENABLE) {
+            if (dish.getStatus() == ShopStatusConstant.ENABLE) {
                 // 目前 菜品 狀態為出售中，無法刪除
                 throw new DeletionNotAllowedException(MessageConstant.DISH_ON_SALE);
             }
