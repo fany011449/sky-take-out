@@ -4,6 +4,7 @@ import com.sky.entity.SetmealDish;
 import com.sky.vo.DishItemVO;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 
 import java.util.List;
 
@@ -30,4 +31,11 @@ public interface SetMealDishMapper {
     void delSetMealDishByIds(List<Long> ids);
 
     List<DishItemVO> getDishListBySetMealId(Long id);
+
+
+    /**
+     * 新增套餐
+     * @param setmealDishes
+     */
+    void insertBatch(List<SetmealDish> setmealDishes);
 }

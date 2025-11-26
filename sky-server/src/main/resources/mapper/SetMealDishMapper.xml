@@ -52,4 +52,14 @@
             #{dishId}
         </foreach>
     </select>
+
+    <!--    批量新增套餐中的菜品-->
+    <insert id="insertBatch">
+        insert into sky_take_out.setmeal_dish(setmeal_id, dish_id, name, price, copies)
+        VALUES
+        <foreach collection="setmealDishes" item="set" separator="," open="(" close=")">
+            #{set.setmealId}, #{set.dishId}, #{set.name}, #{set.price}, #{set.copies}
+        </foreach>
+
+    </insert>
 </mapper>

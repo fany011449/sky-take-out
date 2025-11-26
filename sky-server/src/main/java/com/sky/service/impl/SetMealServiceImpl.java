@@ -211,4 +211,28 @@ public class SetMealServiceImpl implements SetMealService {
     private void deleteAllSetMealCache() {
         redisTemplate.delete(RedisConstant.SHOP_CATEGORY_SETMEALS);
     }
+
+    /**
+     * 新增套餐
+     * @param setmealDTO
+     */
+    @Override
+    @Transactional // 事務管理
+    public void insertSetMeal(SetmealDTO setmealDTO) {
+        Setmeal setmeal = new Setmeal();
+
+        BeanUtils.copyProperties(setmealDTO, setmeal);
+        setMealMapper.insert(setmeal);
+
+        // 保存套餐
+        List<SetmealDish> setmealDishes = setmealDTO.getSetmealDishes();
+
+        if(!CollectionUtils.isEmpty(setmealDishes)){
+            // setMealMapper主鍵返回，賦值給setmeal_id
+            setmealDishes.forEach(setmealDish -> {
+                setmealDish.setSetmealId(setmeal.getId());
+            });
+            setMealDishMapper.insertBatch(setmealDishes);
+        }
+    }
 }

@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,20 +33,6 @@ public class DishServiceImpl implements DishService {
 
     @Autowired
     private SetMealDishMapper setMealDishMapper;
-
-//
-//    @Autowired
-//    private CategoryMapper categoryMapper;
-//
-
-//
-//    @Autowired
-//
-//    @Autowired
-//    private AliOssUtil aliOssUtil;
-//
-//    @Autowired
-//    private StringRedisTemplate redisTemplate;
 
     /**
      * 新增菜品和對應的口味
@@ -167,4 +154,29 @@ public class DishServiceImpl implements DishService {
         List<DishFlavor> flavors = dishDTO.getFlavors();
         dishFlavorMapper.insertBatch(flavors);
     }
+
+    /**
+     * 根據分類ID查詢菜品
+     * @param dish
+     * @return
+     */
+//    @Override
+//    public List<DishVO> listWithFlavor(Dish dish) {
+//        List<Dish> dishList = dishMapper.list(dish);
+//
+//        List<DishVO> dishVOList = new ArrayList<>();
+//
+//        for (Dish d : dishList) {
+//        DishVO dishVO = new DishVO();
+//        BeanUtils.copyProperties(d, dishVO);
+//
+//        // 根據菜品id 查詢對應的口味
+//            List<DishFlavor> flavors = dishFlavorMapper.getByDishId(d.getId());
+//
+//            dishVO.setFlavors(flavors);
+//            dishVOList.add(dishVO);
+//        }
+//
+//        return dishVOList;
+//    }
 }

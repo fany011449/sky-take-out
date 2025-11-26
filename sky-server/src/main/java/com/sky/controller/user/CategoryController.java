@@ -15,10 +15,19 @@ import java.util.List;
 
 @RestController("userCategoryController")
 @RequestMapping("/user/category")
-@Api(tags = "分类相关接口")
+@Api(tags = "C端-分类相关接口")
 @Slf4j
-@Validated
 public class CategoryController {
+
+//    @Autowired
+//    private CategoryService categoryService;
+//
+//    @GetMapping("/list")
+//    @ApiOperation("查詢分類")
+//    public Result<List<Category>> list(Integer type){
+//        List<Category> list = categoryService.listCategoryByType(type);
+//        return Result.success(list);
+//    }
 //
 //    @Autowired
 //    private CategoryService categoryService;

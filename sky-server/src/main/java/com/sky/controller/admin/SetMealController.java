@@ -26,6 +26,64 @@ import java.util.List;
 @RequestMapping("/admin/setmeal")
 @Api(tags = "套餐相关接口")
 public class SetMealController {
+
+    @Autowired
+    private SetMealService setMealService;
+
+    /**
+     * 新增套餐
+     * @param setmealDTO
+     * @return
+     */
+    @PostMapping
+    @ApiOperation("新增套餐")
+    public Result insert(@RequestBody SetmealDTO setmealDTO){
+        log.info("新增套餐：{}", setmealDTO);
+        setMealService.insertSetMeal(setmealDTO);
+
+        return Result.success();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //
 //    @Autowired
 //    private SetMealService setMealService;

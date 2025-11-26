@@ -1,5 +1,7 @@
 package com.sky.controller.user;
 
+import com.sky.constant.ShopStatusConstant;
+import com.sky.entity.Dish;
 import com.sky.result.Result;
 import com.sky.service.DishService;
 import com.sky.vo.DishVO;
@@ -18,8 +20,32 @@ import java.util.List;
 @RequestMapping("/user/dish")
 @Slf4j
 @Api(tags = "菜品相关接口")
-@Validated
 public class DishController {
+
+//    @Autowired
+//    private DishService dishService;
+//
+//    /**
+//     * 根據分類ID查詢菜品
+//     * @param categoryId
+//     * @return
+//     */
+//    @GetMapping("/list")
+//    @ApiOperation("根據分類id查詢菜品")
+//    public Result<List<DishVO>> list(Long categoryId) {
+//        Dish dish = new Dish();
+//        dish.setCategoryId(categoryId);
+//        dish.setStatus(ShopStatusConstant.ENABLE);
+//
+//        List<DishVO> list = dishService.listWithFlavor(dish);
+//
+//        return Result.success(list);
+//    }
+
+
+
+
+
 //    @Autowired
 //    private DishService dishService;
 //

@@ -43,6 +43,19 @@ public interface DishService {
      */
     void updateWithFlavor(DishDTO dishDTO);
 
+    /**
+     * 根據分類ID查詢菜品
+     * @param dish
+     * @return
+     */
+//    List<DishVO> listWithFlavor(Dish dish);
+
+
+
+
+
+
+
 
 //
 //    PageResult<DishVO> getDishList(DishPageQueryDTO dishPageQueryDTO);

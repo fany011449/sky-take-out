@@ -120,4 +120,5 @@ public interface DishMapper {
      * @param dish
      */
     void update(Dish dish);
+
 }

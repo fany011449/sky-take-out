@@ -28,6 +28,7 @@ mybatis:
 
 logging:
   level:
+    org.springframework.jdbc.support.JdbcTransactionManager: DEBUG;
     com:
       sky:
         mapper: debug
