@@ -59,6 +59,19 @@ public class SetMealController {
         return Result.success(pageResult);
     }
 
+    /**
+     * 根據ID查詢套餐
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    @ApiOperation("根據ID查詢套餐")
+    public Result<SetmealVO> queryById(@PathVariable Long id) {
+        log.info("根據ID查詢套餐");
+        SetmealVO setmealVO = setMealService.queryById(id);
+        return Result.success(setmealVO);
+    }
 
 //
 //    @Autowired
