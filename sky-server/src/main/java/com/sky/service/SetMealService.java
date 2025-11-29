@@ -32,4 +32,11 @@ public interface SetMealService {
      * @param setmealDTO
      */
     void insertSetMeal(SetmealDTO setmealDTO);
+
+    /**
+     * 套餐分頁查詢
+     * @param setmealPageQueryDTO
+     * @return
+     */
+    PageResult pageQuery(SetmealPageQueryDTO setmealPageQueryDTO);
 }

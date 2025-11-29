@@ -32,56 +32,32 @@ public class SetMealController {
 
     /**
      * 新增套餐
+     *
      * @param setmealDTO
      * @return
      */
     @PostMapping
     @ApiOperation("新增套餐")
-    public Result insert(@RequestBody SetmealDTO setmealDTO){
+    public Result insert(@RequestBody SetmealDTO setmealDTO) {
         log.info("新增套餐：{}", setmealDTO);
         setMealService.insertSetMeal(setmealDTO);
 
         return Result.success();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * 套餐分頁查詢
+     *
+     * @param setmealPageQueryDTO
+     * @return
+     */
+    @ApiOperation("套餐分頁查詢")
+    @GetMapping("/page")
+    public Result<PageResult> page(SetmealPageQueryDTO setmealPageQueryDTO) {
+        log.info("套餐分頁查詢:{}", setmealPageQueryDTO);
+        PageResult pageResult = setMealService.pageQuery(setmealPageQueryDTO);
+        return Result.success(pageResult);
+    }
 
 
 //

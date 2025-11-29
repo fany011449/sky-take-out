@@ -56,4 +56,11 @@ public interface SetMealMapper {
     @AutoFill(OperationType.INSERT)
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insert(Setmeal setmeal);
+
+    /**
+     * 套餐分頁查詢
+     * @param setmealPageQueryDTO
+     * @return
+     */
+    Page<SetmealVO> pageQuery(SetmealPageQueryDTO setmealPageQueryDTO);
 }

@@ -214,6 +214,7 @@ public class SetMealServiceImpl implements SetMealService {
 
     /**
      * 新增套餐
+     *
      * @param setmealDTO
      */
     @Override
@@ -227,12 +228,26 @@ public class SetMealServiceImpl implements SetMealService {
         // 保存套餐
         List<SetmealDish> setmealDishes = setmealDTO.getSetmealDishes();
 
-        if(!CollectionUtils.isEmpty(setmealDishes)){
+        if (!CollectionUtils.isEmpty(setmealDishes)) {
             // setMealMapper主鍵返回，賦值給setmeal_id
             setmealDishes.forEach(setmealDish -> {
                 setmealDish.setSetmealId(setmeal.getId());
             });
             setMealDishMapper.insertBatch(setmealDishes);
         }
+    }
+
+
+    /**
+     * 套餐分頁查詢
+     *
+     * @param setmealPageQueryDTO
+     * @return
+     */
+    @Override
+    public PageResult pageQuery(SetmealPageQueryDTO setmealPageQueryDTO) {
+        PageHelper.startPage(setmealPageQueryDTO.getPage(), setmealPageQueryDTO.getPageSize());
+        Page<SetmealVO> page = setMealMapper.pageQuery(setmealPageQueryDTO);
+        return new PageResult(page.getTotal(), page.getResult());
     }
 }
