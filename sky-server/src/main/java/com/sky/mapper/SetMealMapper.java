@@ -8,10 +8,7 @@ import com.sky.entity.Setmeal;
 import com.sky.enumeration.OperationType;
 import com.sky.vo.SetmealOverViewVO;
 import com.sky.vo.SetmealVO;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -83,6 +80,7 @@ public interface SetMealMapper {
      */
     Page<SetmealVO> pageQuery(SetmealPageQueryDTO setmealPageQueryDTO);
 
+
     /**
      * 根據ID查詢套餐
      *
@@ -90,4 +88,19 @@ public interface SetMealMapper {
      * @return
      */
     SetmealVO getSetMealById(Long id);
+
+    /**
+     * 根據主鍵ID查詢套餐
+     * @param id
+     * @return
+     */
+    @Select("select * from sky_take_out.setmeal where id = #{id}")
+    Setmeal getById(Long id);
+
+    /**
+     * 根據主鍵ID刪除套餐
+     * @param id
+     */
+    @Delete("delete from sky_take_out.setmeal where id = #{id}")
+    void deleteById(Long id);
 }

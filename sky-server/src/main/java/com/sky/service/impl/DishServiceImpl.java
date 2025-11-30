@@ -109,7 +109,7 @@ public class DishServiceImpl implements DishService {
         for (Long id : ids) {
             dishMapper.deleteById(id);
             // 刪除菜品關聯的口味數據
-            dishFlavorMapper.deletByDishId(id);
+            dishFlavorMapper.deleteByDishId(id);
         }
 
     }
@@ -148,7 +148,7 @@ public class DishServiceImpl implements DishService {
         dishMapper.update(dish);
 
         // 刪除 原有的 口味數據
-        dishFlavorMapper.deletByDishId(dishDTO.getId());
+        dishFlavorMapper.deleteByDishId(dishDTO.getId());
 
         // 重新插入口味數據
         List<DishFlavor> flavors = dishDTO.getFlavors();

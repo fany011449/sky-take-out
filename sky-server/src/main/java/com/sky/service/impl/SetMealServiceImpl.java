@@ -4,13 +4,17 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.sky.constant.MessageConstant;
 import com.sky.constant.RedisConstant;
+import com.sky.constant.ShopStatusConstant;
 import com.sky.dto.SetmealDTO;
 import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.entity.Category;
+import com.sky.entity.Dish;
 import com.sky.entity.Setmeal;
 import com.sky.entity.SetmealDish;
 import com.sky.exception.BusinessException;
+import com.sky.exception.DeletionNotAllowedException;
 import com.sky.mapper.CategoryMapper;
 import com.sky.mapper.DishMapper;
 import com.sky.mapper.SetMealDishMapper;
@@ -217,12 +221,6 @@ public class SetMealServiceImpl implements SetMealService {
 
 
 
-
-
-
-
-
-
     /**
      * 新增套餐
      *
@@ -270,7 +268,49 @@ public class SetMealServiceImpl implements SetMealService {
      */
     @Override
     public SetmealVO queryById(Long id) {
-        SetmealVO setmealVO = setMealMapper.getSetMealById(id);
-        return setmealVO;
+        return setMealMapper.getSetMealById(id);
+    }
+
+    /**
+     * TODO 修改套餐
+     * @param setmealDTO
+     */
+    @Override
+    public void updateSetmeal(SetmealDTO setmealDTO) {
+        // 創建Setmeal對象
+        Setmeal setmeal = new Setmeal();
+        BeanUtils.copyProperties(setmealDTO, setmeal); // 將setmealDTO複製給setmeal
+
+        // 根據Id修改套餐
+//        setMealMapper.update(setmeal);
+
+        // 根據Id修改套餐中的菜品
+        // 先根據套餐id刪除原有的菜品先刪除
+//        setMealDishMapper.deleteSetmealById()
+        // 再新增菜品
+
+    }
+
+    /**
+     * 刪除套餐
+     * @param ids
+     */
+    @Override
+    public void deleteBatch(List<Long> ids) {
+        // 判斷當前套餐是否能刪除 -- 使否出售中
+        for (Long id : ids) {
+            Setmeal setmeal = setMealMapper.getById(id);
+            if (setmeal.getStatus() == ShopStatusConstant.ENABLE) {
+                // 目前 菜品 狀態為出售中，無法刪除
+                throw new DeletionNotAllowedException(MessageConstant.SETMEAL_ON_SALE);
+            }
+        }
+
+        // 刪除菜品表中的菜品數據
+        for (Long id : ids) {
+            setMealMapper.deleteById(id);
+            // 刪除菜品關聯的口味數據
+            setMealDishMapper.deleteBySetmealId(id);
+        }
     }
 }

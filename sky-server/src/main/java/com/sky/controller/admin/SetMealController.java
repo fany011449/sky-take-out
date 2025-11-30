@@ -60,6 +60,19 @@ public class SetMealController {
     }
 
     /**
+     * 刪除套餐
+     * @param ids
+     * @return
+     */
+    @DeleteMapping
+    @ApiOperation("刪除套餐")
+    public Result delete(@RequestParam List<Long> ids){
+        log.info("刪除套餐:{}", ids);
+        setMealService.deleteBatch(ids);
+        return Result.success();
+    }
+
+    /**
      * 根據ID查詢套餐
      *
      * @param id
@@ -68,10 +81,24 @@ public class SetMealController {
     @GetMapping("/{id}")
     @ApiOperation("根據ID查詢套餐")
     public Result<SetmealVO> queryById(@PathVariable Long id) {
-        log.info("根據ID查詢套餐");
+        log.info("根據ID查詢套餐:{}", id);
         SetmealVO setmealVO = setMealService.queryById(id);
         return Result.success(setmealVO);
     }
+
+    /**
+     * 修改套餐
+     * @param setmealDTO
+     * @return
+     */
+    @PutMapping
+    @ApiOperation("修改套餐")
+    public Result update(@RequestBody SetmealDTO setmealDTO){
+        log.info("修改菜單:{}", setmealDTO);
+        setMealService.updateSetmeal(setmealDTO);
+        return Result.success();
+    }
+
 
 //
 //    @Autowired

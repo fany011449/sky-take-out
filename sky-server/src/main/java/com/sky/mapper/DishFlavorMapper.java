@@ -12,7 +12,7 @@ public interface DishFlavorMapper {
 
     int saveBatch(List<DishFlavor> dishFlavors);
 
-    int deleteByDishIds(List<Long> ids);
+//    int deleteByDishIds(List<Long> ids);
 
     /**
      * 批量插入口味數據
@@ -25,7 +25,7 @@ public interface DishFlavorMapper {
      * @param id
      */
     @Delete("delete from sky_take_out.dish_flavor where dish_id = #{id}")
-    void deletByDishId(Long id);
+    void deleteByDishId(Long id);
 
     /**
      * 根據菜品 id 查詢對應的口味數據

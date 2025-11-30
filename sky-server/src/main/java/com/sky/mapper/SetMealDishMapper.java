@@ -38,4 +38,11 @@ public interface SetMealDishMapper {
      * @param setmealDishes
      */
     void insertBatch(List<SetmealDish> setmealDishes);
+
+    /**
+     * 根據 套餐ID 刪除對應的 套餐菜品表
+     * @param id
+     */
+    @Delete("delete from sky_take_out.setmeal_dish where setmeal_id = #{id}")
+    void deleteBySetmealId(Long id);
 }
