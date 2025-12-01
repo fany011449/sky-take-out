@@ -180,4 +180,13 @@
             s.id = #{id}
         </where>
     </select>
+
+<!--    根據主鍵ID刪除套餐-->
+    <delete id="deleteByIds">
+        delete from sky_take_out.setmeal where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
 </mapper>

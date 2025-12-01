@@ -101,6 +101,5 @@ public interface SetMealMapper {
      * 根據主鍵ID刪除套餐
      * @param id
      */
-    @Delete("delete from sky_take_out.setmeal where id = #{id}")
-    void deleteById(Long id);
+    void deleteByIds(List<Long> ids);
 }

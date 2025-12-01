@@ -32,6 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -217,10 +218,6 @@ public class SetMealServiceImpl implements SetMealService {
 //    }
 
 
-
-
-
-
     /**
      * 新增套餐
      *
@@ -273,6 +270,7 @@ public class SetMealServiceImpl implements SetMealService {
 
     /**
      * TODO 修改套餐
+     *
      * @param setmealDTO
      */
     @Override
@@ -283,16 +281,16 @@ public class SetMealServiceImpl implements SetMealService {
 
         // 根據Id修改套餐
 //        setMealMapper.update(setmeal);
-
         // 根據Id修改套餐中的菜品
         // 先根據套餐id刪除原有的菜品先刪除
-//        setMealDishMapper.deleteSetmealById()
+        setMealDishMapper.deleteBySetmealId(Arrays.asList(setmeal.getId()));
         // 再新增菜品
 
     }
 
     /**
      * 刪除套餐
+     *
      * @param ids
      */
     @Override
@@ -307,10 +305,9 @@ public class SetMealServiceImpl implements SetMealService {
         }
 
         // 刪除菜品表中的菜品數據
-        for (Long id : ids) {
-            setMealMapper.deleteById(id);
-            // 刪除菜品關聯的口味數據
-            setMealDishMapper.deleteBySetmealId(id);
-        }
+        setMealMapper.deleteByIds(ids);
+
+        // 刪除菜品關聯的口味數據
+        setMealDishMapper.deleteBySetmealId(ids);
     }
 }
