@@ -43,5 +43,5 @@ public interface SetMealDishMapper {
      * 根據 套餐ID 批量刪除對應的 套餐菜品表
      * @param setmealIds
      */
-    void deleteBySetmealId(List<Long> setmealIds);
+    void deleteBySetmealIds(List<Long> setmealIds);
 }

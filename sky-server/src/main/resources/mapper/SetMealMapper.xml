@@ -155,12 +155,12 @@
 
 <!--        封裝套餐中的菜品-->
         <collection property="setmealDishes" ofType="com.sky.entity.SetmealDish">
-            <id column="id" property="id"/>
-            <result column="setmea_id" property="setmealId"/>
-            <result column="dish_id" property="dishId"/>
-            <result column="name" property="name"/>
-            <result column="price" property="price"/>
-            <result column="copies" property="copies"/>
+            <id column="sd_id" property="id"/>
+            <result column="sd_setmealid" property="setmealId"/>
+            <result column="sd_dishid" property="dishId"/>
+            <result column="sd_name" property="name"/>
+            <result column="sd_price" property="price"/>
+            <result column="sd_copies" property="copies"/>
         </collection>
     </resultMap>
     
@@ -175,11 +175,25 @@
             sd.price sd_price,
             sd.copies sd_copies
         from sky_take_out.setmeal s
-                 left join sky_take_out.setmeal_dish sd on s.id = sd.id
+                 left join sky_take_out.setmeal_dish sd on s.id = sd.setmeal_id
         <where>
             s.id = #{id}
         </where>
     </select>
+
+<!--    根據主鍵ID更新套餐基本信息-->
+    <update id="updateById">
+        update sky_take_out.setmeal
+        set
+            category_id = #{categoryId},
+            name = #{name},
+            price = #{price},
+            status = #{status},
+            description = #{description},
+            update_time = #{updateTime},
+            update_user = #{updateUser}
+        where id = #{id}
+    </update>
 
 <!--    根據主鍵ID刪除套餐-->
     <delete id="deleteByIds">

@@ -99,7 +99,14 @@ public interface SetMealMapper {
 
     /**
      * 根據主鍵ID刪除套餐
-     * @param id
+     * @param ids
      */
     void deleteByIds(List<Long> ids);
+
+    /**
+     * 根據ID更新套餐基本信息
+     * @param setmeal
+     */
+    @AutoFill(OperationType.UPDATE)
+    void updateById(Setmeal setmeal);
 }

@@ -269,23 +269,31 @@ public class SetMealServiceImpl implements SetMealService {
     }
 
     /**
-     * TODO 修改套餐
+     * 修改套餐
      *
      * @param setmealDTO
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateSetmeal(SetmealDTO setmealDTO) {
         // 創建Setmeal對象
         Setmeal setmeal = new Setmeal();
         BeanUtils.copyProperties(setmealDTO, setmeal); // 將setmealDTO複製給setmeal
 
         // 根據Id修改套餐
-//        setMealMapper.update(setmeal);
+        setMealMapper.updateById(setmeal);
+
         // 根據Id修改套餐中的菜品
         // 先根據套餐id刪除原有的菜品先刪除
-        setMealDishMapper.deleteBySetmealId(Arrays.asList(setmeal.getId()));
+        setMealDishMapper.deleteBySetmealIds(Arrays.asList(setmeal.getId()));
         // 再新增菜品
+        List<SetmealDish> setmealDishes = setmealDTO.getSetmealDishes();
 
+        if (!CollectionUtils.isEmpty(setmealDishes)) {
+            // 將每個菜品賦值setmealId為原本ID
+            setmealDishes.forEach(setmealDish -> setmealDish.setSetmealId(setmeal.getId()));
+            setMealDishMapper.insertBatch(setmealDishes);
+        }
     }
 
     /**
@@ -308,6 +316,6 @@ public class SetMealServiceImpl implements SetMealService {
         setMealMapper.deleteByIds(ids);
 
         // 刪除菜品關聯的口味數據
-        setMealDishMapper.deleteBySetmealId(ids);
+        setMealDishMapper.deleteBySetmealIds(ids);
     }
 }

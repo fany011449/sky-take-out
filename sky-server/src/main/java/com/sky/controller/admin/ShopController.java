@@ -50,6 +50,5 @@ public class ShopController {
         Integer status = (Integer) redisTemplate.opsForValue().get(RedisConstant.SHOP_STATUS_KEY);
         log.info("獲取店鋪的營業狀態為：{}", status.equals(ShopStatusConstant.ENABLE) ? "營業中" : "打烊中");
         return Result.success(status);
-
     }
 }

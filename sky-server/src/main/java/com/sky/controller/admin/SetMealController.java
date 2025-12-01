@@ -1,5 +1,6 @@
 package com.sky.controller.admin;
 
+import com.sky.constant.RedisConstant;
 import com.sky.dto.SetmealDTO;
 import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.result.PageResult;
@@ -14,6 +15,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +32,9 @@ public class SetMealController {
 
     @Autowired
     private SetMealService setMealService;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * 新增套餐
@@ -97,6 +102,13 @@ public class SetMealController {
     public Result update(@RequestBody SetmealDTO setmealDTO){
         log.info("修改菜單:{}", setmealDTO);
         setMealService.updateSetmeal(setmealDTO);
+        return Result.success();
+    }
+
+    @PostMapping("/status/{status}")
+    @ApiOperation("套餐起售、停售")
+    public Result updateStatus(@PathVariable Integer status){
+        redisTemplate.opsForValue().set(RedisConstant.SHOP_CATEGORY_SETMEALS, status);
         return Result.success();
     }
 
