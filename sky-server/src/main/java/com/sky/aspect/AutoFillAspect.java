@@ -29,12 +29,12 @@ public class AutoFillAspect {
      * @annotation 是為了標記哪些"連接點"需要被使用。
      */
     @Pointcut("execution(* com.sky.mapper.*.*(..)) && @annotation(com.sky.annotation.AutoFill)")
-    public void autoFilPointCut(){}
+    public void autoFillPointCut(){}
 
     /**
      * 前置通知，在通知中進行公共字段的賦值
      */
-    @Before("autoFilPointCut()")
+    @Before("autoFillPointCut()")
     public void autoFill(JoinPoint joinPoint){
         log.info("開始進行公共字段的自動填充 . . .");
 
