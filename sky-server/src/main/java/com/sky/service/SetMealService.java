@@ -22,9 +22,9 @@ public interface SetMealService {
 //
 //    boolean deleteSetMealByIds(List<Long> ids);
 //
-//    List<Setmeal> getSetMealListByCategoryId(Long categoryId);
+    List<Setmeal> getSetMealListByCategoryId(Long categoryId);
 //
-//    List<DishItemVO> getDishListBySetMealId(Long id);
+    List<DishItemVO> getDishListBySetMealId(Long id);
 
 
     /**

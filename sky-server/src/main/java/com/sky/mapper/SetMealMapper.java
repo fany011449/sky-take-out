@@ -41,8 +41,8 @@ public interface SetMealMapper {
 //
 //    List<String> getSetMealImagesByIds(List<Long> ids);
 //
-//    @Select("select * from setmeal where status = 1 and category_id = #{categoryId}")
-//    List<Setmeal> getSetMealListByCategoryId(Long categoryId);
+    @Select("select * from setmeal where status = 1 and category_id = #{categoryId}")
+    List<Setmeal> getSetMealListByCategoryId(Long categoryId);
 //
     SetmealOverViewVO getAllStatusSetMealCount();
 

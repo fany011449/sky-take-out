@@ -177,27 +177,27 @@ public class SetMealServiceImpl implements SetMealService {
 //        return affectRows > 0;
 //    }
 //
-//    @Override
-//    public List<Setmeal> getSetMealListByCategoryId(Long categoryId) {
-//        String jsonStr = (String) redisTemplate.opsForHash().get(RedisConstant.SHOP_CATEGORY_SETMEALS, categoryId.toString());
-//        if (jsonStr == null) {
-//            List<Setmeal> setmealList = setMealMapper.getSetMealListByCategoryId(categoryId);
-//            String json = JSONObject.toJSONString(setmealList);
-//            redisTemplate.opsForHash().put(RedisConstant.SHOP_CATEGORY_SETMEALS, categoryId.toString(), json);
-//            return setmealList;
-//        }
-//        // jsonStr不为空，直接转List<Setmeal>
-//        return JSON.parseArray(jsonStr, Setmeal.class);
-//    }
-//
-//    @Override
-//    public List<DishItemVO> getDishListBySetMealId(Long id) {
-//        List<DishItemVO> dishItemVOList = setMealDishMapper.getDishListBySetMealId(id);
-//        if (CollectionUtils.isEmpty(dishItemVOList)) {
-//            throw new BusinessException("当前套餐异常，菜品为空...");
-//        }
-//        return dishItemVOList;
-//    }
+    @Override
+    public List<Setmeal> getSetMealListByCategoryId(Long categoryId) {
+        String jsonStr = (String) redisTemplate.opsForHash().get(RedisConstant.SHOP_CATEGORY_SETMEALS, categoryId.toString());
+        if (jsonStr == null) {
+            List<Setmeal> setmealList = setMealMapper.getSetMealListByCategoryId(categoryId);
+            String json = JSONObject.toJSONString(setmealList);
+            redisTemplate.opsForHash().put(RedisConstant.SHOP_CATEGORY_SETMEALS, categoryId.toString(), json);
+            return setmealList;
+        }
+        // jsonStr不为空，直接转List<Setmeal>
+        return JSON.parseArray(jsonStr, Setmeal.class);
+    }
+
+    @Override
+    public List<DishItemVO> getDishListBySetMealId(Long id) {
+        List<DishItemVO> dishItemVOList = setMealDishMapper.getDishListBySetMealId(id);
+        if (CollectionUtils.isEmpty(dishItemVOList)) {
+            throw new BusinessException("当前套餐异常，菜品为空...");
+        }
+        return dishItemVOList;
+    }
 //
 //    private void checkDishExistAndSelling(List<SetmealDish> setmealDishes) {
 //        Set<Long> dishIds = setmealDishes.stream().map(SetmealDish::getDishId).collect(Collectors.toSet());

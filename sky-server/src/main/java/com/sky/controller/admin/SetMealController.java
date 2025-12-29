@@ -15,6 +15,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +45,7 @@ public class SetMealController {
      */
     @PostMapping
     @ApiOperation("新增套餐")
+    @CacheEvict(cacheNames = "setmealCache", key = "#setmealDTO.categoryId")
     public Result insert(@RequestBody SetmealDTO setmealDTO) {
         log.info("新增套餐：{}", setmealDTO);
         setMealService.insertSetMeal(setmealDTO);
@@ -72,6 +74,7 @@ public class SetMealController {
      */
     @DeleteMapping
     @ApiOperation("刪除套餐")
+    @CacheEvict(cacheNames = "setmealCache", allEntries = true)
     public Result delete(@RequestParam List<Long> ids){
         log.info("刪除套餐:{}", ids);
         setMealService.deleteBatch(ids);
@@ -86,6 +89,7 @@ public class SetMealController {
      */
     @GetMapping("/{id}")
     @ApiOperation("根據ID查詢套餐")
+    @CacheEvict(cacheNames = "setmealCache", allEntries = true)
     public Result<SetmealVO> queryById(@PathVariable Long id) {
         log.info("根據ID查詢套餐:{}", id);
         SetmealVO setmealVO = setMealService.queryById(id);
@@ -99,6 +103,7 @@ public class SetMealController {
      */
     @PutMapping
     @ApiOperation("修改套餐")
+    @CacheEvict(cacheNames = "setmealCache", allEntries = true)
     public Result update(@RequestBody SetmealDTO setmealDTO){
         log.info("修改菜單:{}", setmealDTO);
         setMealService.updateSetmeal(setmealDTO);
@@ -107,6 +112,7 @@ public class SetMealController {
 
     @PostMapping("/status/{status}")
     @ApiOperation("套餐起售、停售")
+    @CacheEvict(cacheNames = "setmealCache", allEntries = true)
     public Result updateStatus(@PathVariable Integer status){
         redisTemplate.opsForValue().set(RedisConstant.SHOP_CATEGORY_SETMEALS, status);
         return Result.success();
