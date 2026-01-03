@@ -6,7 +6,13 @@ import com.sky.entity.ShoppingCart;
 import java.util.List;
 
 public interface ShoppingCartService {
-    boolean addShoppingCart(ShoppingCartDTO shoppingCartDTO);
+    boolean addShoppingCart1(ShoppingCartDTO shoppingCartDTO);
+
+    /**
+     * 添加購物車
+     * @param shoppingCartDTO
+     */
+    void addShoppingCart(ShoppingCartDTO shoppingCartDTO);
 
     List<ShoppingCart> listShoppingCart();
 

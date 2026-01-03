@@ -9,6 +9,36 @@ import java.util.List;
 @Mapper
 public interface ShoppingCartMapper {
 
+    /**
+     * 動態條件查詢
+     * @param shoppingCart
+     * @return
+     */
+    List<ShoppingCart> list(ShoppingCart shoppingCart);
+
+    /**
+     * 根據Id修改商品數量
+     * @param shoppingCart
+     */
+    @Update("update sky_take_out.shopping_cart set number = #{number} where id = #{id}")
+    void updateNumberById(ShoppingCart shoppingCart);
+
+    /**
+     * 新增購物車數據
+     * @param shoppingCart
+     */
+    @Insert("insert into sky_take_out.shopping_cart(name, image, user_id, dish_id, setmeal_id, dish_flavor, number, amount, create_time)" +
+            "values (#{name}, #{image}, #{userId}, #{dishId}, #{setmealId}, #{dishFlavor}, #{number}, #{amount}, #{createTime})")
+    void insert(ShoppingCart shoppingCart);
+
+
+
+
+
+
+
+
+
     ShoppingCart getShoppingCartItem(Long userId, ShoppingCartDTO shoppingCartDTO);
 
     @Update("update shopping_cart set number = #{number} where id = #{id}")
@@ -28,4 +58,5 @@ public interface ShoppingCartMapper {
     int deleteCartItem(Long id);
 
     void saveItemBatch(List<ShoppingCart> shoppingCartList);
+
 }

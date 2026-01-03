@@ -1,8 +1,10 @@
 package com.sky.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.sky.context.BaseContext;
 import com.sky.dto.ShoppingCartDTO;
 import com.sky.entity.Dish;
+import com.sky.entity.Setmeal;
 import com.sky.entity.ShoppingCart;
 import com.sky.exception.BusinessException;
 import com.sky.mapper.DishMapper;
@@ -10,8 +12,10 @@ import com.sky.mapper.SetMealMapper;
 import com.sky.mapper.ShoppingCartMapper;
 import com.sky.service.ShoppingCartService;
 import com.sky.vo.SetmealVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,8 +32,59 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Autowired
     private SetMealMapper setMealMapper;
 
+
+    /**
+     * 添加購物車
+     *
+     * @param shoppingCartDTO
+     */
     @Override
-    public boolean addShoppingCart(ShoppingCartDTO shoppingCartDTO) {
+    public void addShoppingCart(ShoppingCartDTO shoppingCartDTO) {
+        // 判斷當前加入到購物車中的商品是否已經存在了
+        ShoppingCart shoppingCart = new ShoppingCart();
+        BeanUtils.copyProperties(shoppingCartDTO, shoppingCart);
+        Long userId = BaseContext.getCurrentId();
+        shoppingCart.setUserId(userId);
+
+        List<ShoppingCart> list = shoppingCartMapper.list(shoppingCart);
+
+        // 如果已經存在，只需要將數量加一
+        if (!CollectionUtils.isEmpty(list)) {
+            ShoppingCart cart = list.get(0);
+            cart.setNumber(cart.getNumber() + 1);
+            shoppingCartMapper.updateNumberById(cart);
+        } else {
+            // 反之，需要插入一條購物車數據
+
+            // 判斷本次添加的是菜品還是套餐
+            Long dishId = shoppingCartDTO.getDishId();
+            if(dishId != null) {
+                // 本次添加 菜品
+                Dish dish = dishMapper.getById(dishId);
+                shoppingCart.setName(dish.getName());
+                shoppingCart.setImage(dish.getImage());
+                shoppingCart.setAmount(dish.getPrice());
+            }else {
+                // 本次添加 套餐
+                Long setmealId = shoppingCart.getSetmealId();
+
+                Setmeal setmeal = setMealMapper.getById(setmealId);
+                shoppingCart.setName(setmeal.getName());
+                shoppingCart.setImage(setmeal.getImage());
+                shoppingCart.setAmount(setmeal.getPrice());
+            }
+
+            shoppingCart.setNumber(1);
+            shoppingCart.setCreateTime(LocalDateTime.now());
+            shoppingCartMapper.insert(shoppingCart);
+        }
+
+
+    }
+
+
+    @Override
+    public boolean addShoppingCart1(ShoppingCartDTO shoppingCartDTO) {
         Long currentId = BaseContext.getCurrentId();
 
         ShoppingCart cartItem = getShoppingCartItem(currentId, shoppingCartDTO);
@@ -55,7 +110,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                     .dishFlavor(shoppingCartDTO.getDishFlavor())
                     .amount(dish.getPrice())
                     .build();
-        }else {
+        } else {
             // 说明添加套餐到购物车中
             SetmealVO setmealVO = setMealMapper.getSetMealById(setmealId);
             if (setmealVO == null) {
@@ -75,6 +130,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
         return affectRow > 0;
     }
+
 
     @Override
     public List<ShoppingCart> listShoppingCart() {
@@ -103,7 +159,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         if (number == 1) {
             // 如果只剩下1个，那么直接删除对应的购物车数据
             affectRow = shoppingCartMapper.deleteCartItem(cartItem.getId());
-        }else {
+        } else {
             // 更新商品数量
             cartItem.setNumber(cartItem.getNumber() - 1);
             affectRow = shoppingCartMapper.updateCartItem(cartItem);

@@ -3,6 +3,46 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sky.mapper.ShoppingCartMapper">
 
+    <!--    動態條件查詢-->
+    <select id="list" resultType="com.sky.entity.ShoppingCart">
+        select * from sky_take_out.shopping_cart
+        <where>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="setmealId != null">
+                and setmeal_id = #{setmealId}
+            </if>
+            <if test="dishId != null">
+                and dish_id = #{dishId}
+            </if>
+            <if test="dishFlavor != null">
+                and dish_Flavor = #{dishFlavor}
+            </if>
+        </where>
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <select id="getShoppingCartItem" resultType="com.sky.entity.ShoppingCart">
         select * from shopping_cart
         <where>
@@ -21,7 +61,6 @@
             </if>
         </where>
     </select>
-
 
     <insert id="saveItemBatch">
         insert into shopping_cart (name, image, user_id, dish_id, setmeal_id, dish_flavor, number, amount, create_time)
