@@ -14,6 +14,17 @@ public interface ShoppingCartService {
      */
     void addShoppingCart(ShoppingCartDTO shoppingCartDTO);
 
+    /**
+     * 查看購物車
+     * @return
+     */
+    List<ShoppingCart> showShoppingCart();
+
+    /**
+     * 清空購物車
+     */
+    void cleanShoppingCart();
+
     List<ShoppingCart> listShoppingCart();
 
     boolean clearShoppingCart();
