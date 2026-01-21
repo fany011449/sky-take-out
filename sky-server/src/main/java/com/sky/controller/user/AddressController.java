@@ -3,6 +3,7 @@ package com.sky.controller.user;
 import com.sky.context.BaseContext;
 import com.sky.entity.AddressBook;
 import com.sky.result.Result;
+import com.sky.service.AddressBookService;
 import com.sky.service.AddressService;
 import com.sky.valid.groups.Add;
 import com.sky.valid.groups.Update;
@@ -16,23 +17,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@Slf4j
-@Api(tags = "收货地址相关接口")
-@Validated
-@RequestMapping("/user/addressBook")
+
 public class AddressController {
-//
+
 //    @Autowired
-//    private AddressService addressService;
-//
-//    @PostMapping
-//    @ApiOperation("新增收货地址")
-//    public Result<?> saveAddress(@RequestBody @Validated(Add.class) AddressBook addressBook) {
-//        log.info("新增收货地址：{}", addressBook);
-//        boolean result = addressService.saveAddress(addressBook);
-//        return result ? Result.success() : Result.error("添加失败");
-//    }
+//    private AddressBookService addressBookService;
 //
 //    @GetMapping("/list")
 //    @ApiOperation("获取当前用户所有收货地址")
@@ -41,6 +30,15 @@ public class AddressController {
 //        List<AddressBook> addresses = addressService.getAllAddress();
 //        return Result.success(addresses);
 //    }
+//    @PostMapping
+//    @ApiOperation("新增收货地址")
+//    public Result<?> saveAddress(@RequestBody @Validated(Add.class) AddressBook addressBook) {
+//        log.info("新增收货地址：{}", addressBook);
+//        boolean result = addressService.saveAddress(addressBook);
+//        return result ? Result.success() : Result.error("添加失败");
+//    }
+//
+
 //
 //    @GetMapping("/default")
 //    @ApiOperation("查询默认地址")
